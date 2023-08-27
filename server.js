@@ -8,20 +8,33 @@ const app = express();
 const path = require('path')
 
 
-app.get("/", function (request, response) {
+app.get("/:appName", function (request, response) {
+  const appName = request.params.appName;
   app.use('/public', express.static("./src/public"));
   app.use('/static', express.static('./src/static'))
   app.use('/modules', express.static('./src/modules'))
   app.use('/utils', express.static('./src/utils'))
   app.use('/data', express.static('./src/data'))
-  response.sendFile(__dirname + "/src/views/index.html");
+  app.use(express.static(__dirname));
+  response.send(`
+  <!DOCTYPE html>
+  <html>
+  <head>
+      <title>${appName}</title>
+      <style>
+      body {
+        margin: 0;
+      }
+      </style>
+  </head>
+  <body>
+      <script type="module" src="/public/${appName}/${appName}.js"></script>
+  </body>
+  </html>
+`);
 });
 
 
-// app.get("/", function (request, response) {
-//   app.use('/build/js', express.static("public"));
-//   response.sendFile(__dirname + "/build/html/index.html");
-// });
 
 var server = app.listen(process.env.PORT || port, listen);
 

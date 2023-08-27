@@ -20,22 +20,7 @@ class NoClipControls extends PointerLockControls {
         this._moveRight = false;
         this._moveUp = false;
         this._moveDown = false;
-
-        //Initializing with DOM
-        const blocker = document.getElementById('blocker');
-        const instructions = document.getElementById('instructions');
-        const container = document.getElementById('container');
-        this.addEventListener('lock', function () {
-            instructions.style.display = 'none';
-            blocker.style.display = 'none';
-        });
-        this.addEventListener('unlock', function () {
-            blocker.style.display = 'block';
-            instructions.style.display = '';
-        });
-        window.addEventListener('dblclick', (event) => {
-            this.lock();
-        });
+        // this.lock()
 
         window.addEventListener('keydown', (event) => {
             this.lock();
